@@ -55,6 +55,18 @@ public class BahmniDispositionServiceImpl implements BahmniDispositionService {
 
         return getDispositionByVisit(visit, locale);
     }
+    @Override
+    public List<BahmniDisposition> getDispositionByVisitUuid(String visitUuid) {
+        Assert.notNull(visitUuid);
+
+        Visit visit = visitService.getVisitByUuid(visitUuid);
+
+        if(visit == null){
+            return new ArrayList<>();
+        }
+
+        return getDispositionByVisit(visit , new Locale("en"));
+    }
 
     public List<BahmniDisposition> getDispositionByVisits(List<Visit> visits , Locale locale){
         List<BahmniDisposition> dispositions = new ArrayList<>();
@@ -65,7 +77,15 @@ public class BahmniDispositionServiceImpl implements BahmniDispositionService {
 
         return  dispositions;
     }
+    public List<BahmniDisposition> getDispositionByVisits(List<Visit> visits){
+        List<BahmniDisposition> dispositions = new ArrayList<>();
 
+        for(Visit visit: visits){
+            dispositions.addAll(getDispositionByVisit(visit , new Locale("en")));
+        }
+
+        return  dispositions;
+    }
     private List<BahmniDisposition> getDispositionByVisit(Visit visit , Locale locale) {
         List<BahmniDisposition> dispositions = new ArrayList<>();
         for (Encounter encounter : visit.getEncounters()) {
@@ -81,7 +101,10 @@ public class BahmniDispositionServiceImpl implements BahmniDispositionService {
         return dispositions;
     }
 
-    private void addBahmniDisposition(List<BahmniDisposition> dispositions, Set<EncounterTransaction.Provider> eTProvider, Obs observation , Locale locale) {
+    private void addBahmniDisposition(List<BahmniDisposition> dispositions,
+                                      Set<EncounterTransaction.Provider> eTProvider,
+                                      Obs observation ,
+                                      Locale locale) {
         EncounterTransaction.Disposition eTDisposition = dispositionMapper.getDisposition(observation);
         if(eTDisposition!=null){
             dispositions.add(bahmniDispositionMapper.map(eTDisposition, eTProvider, observation.getCreator(),locale));

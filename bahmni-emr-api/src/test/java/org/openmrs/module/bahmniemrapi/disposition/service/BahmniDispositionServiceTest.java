@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.util.Locale;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -81,7 +81,6 @@ public class BahmniDispositionServiceTest {
     public void shouldReturnEmptyDispositionListWhenVisitNotAvailable() {
         when(visitService.getVisitByUuid("visitUuid")).thenReturn(null);
         List<BahmniDisposition> actualDispositions = bahmniDispositionService.getDispositionByVisitUuid("visitUuid");
-
         Assert.assertNotNull(actualDispositions);
         assertEquals(0, actualDispositions.size());
     }
@@ -112,7 +111,7 @@ public class BahmniDispositionServiceTest {
         when(encounterProviderMapper.convert(new HashSet<EncounterProvider>())).thenReturn(eTProvider);
         when(observationTypeMatcher.getObservationType(height)).thenReturn(ObservationTypeMatcher.ObservationType.DISPOSITION);
         when(dispositionMapper.getDisposition(height)).thenReturn(eTDisposition);
-        when(bahmniDispositionMapper.map(eTDisposition, eTProvider, null)).thenReturn(bahmniDisposition);
+        when(bahmniDispositionMapper.map(eTDisposition, eTProvider, null ,new Locale("en"))).thenReturn(bahmniDisposition);
 
         List<BahmniDisposition> actualDispositions = bahmniDispositionService.getDispositionByVisitUuid("visitUuid");
 
@@ -152,7 +151,7 @@ public class BahmniDispositionServiceTest {
         when(dispositionMapper.getDisposition(height)).thenReturn(null);
 
 
-        List<BahmniDisposition> actualDispositions = bahmniDispositionService.getDispositionByVisitUuid("visitUuid");
+        List<BahmniDisposition> actualDispositions = bahmniDispositionService.getDispositionByVisitUuid("visitUuid", new Locale("en"));
 
         assertEquals(0, actualDispositions.size());
     }
@@ -182,7 +181,7 @@ public class BahmniDispositionServiceTest {
         when(encounterProviderMapper.convert(new HashSet<EncounterProvider>())).thenReturn(eTProvider);
         when(observationTypeMatcher.getObservationType(height)).thenReturn(ObservationTypeMatcher.ObservationType.DISPOSITION);
         when(dispositionMapper.getDisposition(height)).thenReturn(eTDisposition);
-        when(bahmniDispositionMapper.map(eTDisposition, eTProvider, null)).thenReturn(bahmniDisposition);
+        when(bahmniDispositionMapper.map(eTDisposition, eTProvider, null , new Locale("en"))).thenReturn(bahmniDisposition);
 
         List<BahmniDisposition> actualDispositions = bahmniDispositionService.getDispositionByVisits(Arrays.asList(visit));
 

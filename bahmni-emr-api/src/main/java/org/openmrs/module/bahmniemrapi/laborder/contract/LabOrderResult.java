@@ -27,8 +27,8 @@ public class LabOrderResult {
     private Boolean referredOut;
     private Date resultDateTime;
     private String uploadedFileName;
-    private String preferredNameForTestLocale;
-    private String preferredNameForPanelLocale;
+    private String preferredTestName;
+    private String preferredPanelName;
 
     public LabOrderResult() {
     }
@@ -48,22 +48,7 @@ public class LabOrderResult {
         this.uploadedFileName = uploadedFileName;
         this.accessionNotes = accessionNotes;
     }
-    public LabOrderResult(String orderUuid, String action, String accessionUuid, Date accessionDateTime, String testName, String testUnitOfMeasurement, Double minNormal, Double maxNormal, String result, Boolean abnormal, Boolean referredOut, String uploadedFileName, List<AccessionNote> accessionNotes ,String preferredNameByLocale) {
-        this.orderUuid = orderUuid;
-        this.action = action;
-        this.accessionUuid = accessionUuid;
-        this.testName = testName;
-        this.testUnitOfMeasurement = testUnitOfMeasurement;
-        this.minNormal = minNormal;
-        this.maxNormal = maxNormal;
-        this.accessionDateTime = accessionDateTime;
-        this.result = result;
-        this.abnormal = abnormal;
-        this.referredOut = referredOut;
-        this.uploadedFileName = uploadedFileName;
-        this.accessionNotes = accessionNotes;
-        this.preferredNameForTestLocale = preferredNameByLocale;
-    }
+
     public String getOrderUuid() {
         return orderUuid;
     }
@@ -232,16 +217,19 @@ public class LabOrderResult {
         this.uploadedFileName = uploadedFileName;
     }
 
-    public String getPreferredNameForTestLocale() { return preferredNameForTestLocale; }
-
-    public void setPreferredNameForTestLocale(String preferredNameForTestLocale) { this.preferredNameForTestLocale = preferredNameForTestLocale; }
-
-    public String getPreferredNameForPanelLocale() {
-        return preferredNameForPanelLocale;
+    public String getPreferredTestName() {
+        return preferredTestName;
     }
 
-    public void setPreferredNameForPanelLocale(String preferredNameForPanelLocale) {
-        this.preferredNameForPanelLocale = preferredNameForPanelLocale;
+    public void setPreferredTestName(String preferredTestName) {
+        this.preferredTestName = preferredTestName;
     }
 
+    public String getPreferredPanelName() {
+        return preferredPanelName;
+    }
+
+    public void setPreferredPanelName(String preferredPanelName) {
+        this.preferredPanelName = preferredPanelName;
+    }
 }
