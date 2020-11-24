@@ -3,9 +3,9 @@ package org.openmrs.module.bahmniemrapi.disposition.mapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Person;
-import org.openmrs.PersonName;
-import org.openmrs.User;
+import org.mockito.Mock;
+import org.openmrs.*;
+import org.openmrs.api.ConceptService;
 import org.openmrs.module.bahmniemrapi.disposition.contract.BahmniDisposition;
 import org.openmrs.module.emrapi.encounter.domain.EncounterTransaction;
 
@@ -15,17 +15,35 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Locale;
 
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 public class BahmniDispositionMapperTest {
 
     private BahmniDispositionMapper bahmniDispositionMapper;
+    @Mock
+    private ConceptService conceptService;
+    @Mock
+    private EncounterTransaction.Disposition mockDisposition;
+    @Mock
+    private Concept dispositionConcept;
+    @Mock
+    private ConceptName conceptName;
 
     @Before
     public void setUp(){
-        bahmniDispositionMapper = new BahmniDispositionMapper();
-    }
+        initMocks(this);
 
+        Locale locale = new Locale("en");
+        String conceptNameString = "Absconding";
+        when(conceptService.getConcept(conceptNameString)).thenReturn(dispositionConcept);
+        when(dispositionConcept.getPreferredName(locale)).thenReturn(conceptName);
+        when(conceptName.getName()).thenReturn(conceptNameString);
+        bahmniDispositionMapper = new BahmniDispositionMapper(conceptService);
+    }
     @Test
     public void ensureBahmniDispositionIsPopulated(){
+
         EncounterTransaction.Provider provider = new EncounterTransaction.Provider();
         provider.setName("Sample Provider");
         provider.setUuid("1234Uuid");
@@ -53,7 +71,6 @@ public class BahmniDispositionMapperTest {
         personNames.add(personName);
         person.setNames(personNames);
         User user = new User(person);
-
 
         BahmniDisposition bahmniDisposition = bahmniDispositionMapper.map(disposition, providers, user , new Locale("en"));
 

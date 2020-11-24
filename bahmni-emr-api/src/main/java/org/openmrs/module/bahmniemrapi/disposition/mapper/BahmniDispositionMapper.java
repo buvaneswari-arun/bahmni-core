@@ -13,8 +13,12 @@ import java.util.Locale;
 
 @Component
 public class BahmniDispositionMapper {
-    @Autowired
+
     private ConceptService conceptService;
+    @Autowired
+    public BahmniDispositionMapper(ConceptService conceptService) {
+        this.conceptService = conceptService;
+    }
     public BahmniDisposition map(EncounterTransaction.Disposition disposition, Set<EncounterTransaction.Provider> providers, User user , Locale locale){
         BahmniDisposition bahmniDisposition = new BahmniDisposition();
         bahmniDisposition.setAdditionalObs(disposition.getAdditionalObs());
