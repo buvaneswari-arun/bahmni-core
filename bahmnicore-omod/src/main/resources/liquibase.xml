@@ -4525,11 +4525,11 @@
     </changeSet>
     <changeSet id="bahmni-core-202011150948" author="Buvaneswari">
         <preConditions onFail="MARK_RAN">
-            <not><tableExists tableName="form_privileges"/></not>
+            <not><tableExists tableName="form_privilege"/></not>
         </preConditions>
         <comment>Introducing form_privilege table as part of BAH_790 Privilege based access to forms</comment>
         <sql>
-            CREATE TABLE form_privilege
+            CREATE TABLE form_privilege (
             form_privilege_id int(11) NOT NULL AUTO_INCREMENT,
             formId int(11) NOT NULL DEFAULT '0',
             formVersion varchar(50) NOT NULL DEFAULT '0',
@@ -4544,7 +4544,7 @@
             PRIMARY KEY (form_privilege_id),
             UNIQUE KEY form_privilege_uuid_index (uuid),
             KEY defines_parent_form_id (formId),
-            CONSTRAINT defines_parent_form_id` FOREIGN KEY (formId) REFERENCES form (form_id)
+            CONSTRAINT defines_parent_form_id` FOREIGN KEY (formId) REFERENCES form (form_id));
         </sql>
     </changeSet>
 </databaseChangeLog>
