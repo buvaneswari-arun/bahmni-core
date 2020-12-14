@@ -4523,7 +4523,7 @@
     		INSERT INTO role_privilege (role, privilege) VALUES ('Anonymous', 'Get Locations');
     	</sql>
     </changeSet>
-    <changeSet id="bahmni-core-202012150777" author="Buvaneswari">
+    <changeSet id="bahmni-core-202012150888" author="Buvaneswari">
         <preConditions onFail="MARK_RAN">
             <not><tableExists tableName="form_privilege"/></not>
         </preConditions>
