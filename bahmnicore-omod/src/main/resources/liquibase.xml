@@ -4523,22 +4523,19 @@
     		INSERT INTO role_privilege (role, privilege) VALUES ('Anonymous', 'Get Locations');
     	</sql>
     </changeSet>
-    <changeSet id="bahmni-core-20201210148" author="Buvaneswari">
+    <changeSet id="bahmni-core-202012150777" author="Buvaneswari">
         <preConditions onFail="MARK_RAN">
             <not><tableExists tableName="form_privilege"/></not>
         </preConditions>
-        <comment>Introducing form_privilege table as part of BAH_790 Privilege based access to forms</comment>
-        <sql>
-            CREATE TABLE form_privilege(
-            form_privilege_id int(11) NOT NULL AUTO_INCREMENT,
-            formId int(11) NOT NULL DEFAULT '0',
-            formVersion varchar(50) NOT NULL DEFAULT '0',
-            privilegeName varchar(50) NOT NULL DEFAULT '',
-            editable tinyint(1) DEFAULT '0',
-            viewable tinyint(1) DEFAULT '0',
-            date_created datetime NOT NULL,
-            date_changed datetime DEFAULT NULL,
-            CONSTRAINT form_privilege_pk PRIMARY KEY (form_privilege_id));
-        </sql>
+        <createTable tableName="form_privilege">
+            <column autoIncrement="true" name="form_privilege_id" type="int"> <constraints nullable="false" primaryKey="true"/> </column>
+            <column name="formId" type="int"> <constraints nullable="false"/> </column>
+            <column name="formVersion" type="varchar(50)"> <constraints nullable="false"/> </column>
+            <column name="privilegeName" type="varchar(255)"> <constraints nullable="false"/></column>
+            <column name="editable" type="int"> <constraints nullable="true"/> </column>
+            <column name="viewable" type="int"> <constraints nullable="true"/> </column>
+            <column name="date_created" type="DATETIME"> <constraints nullable="false"/> </column>
+            <column name="date_changed" type="DATETIME"> <constraints nullable="true"/> </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>
